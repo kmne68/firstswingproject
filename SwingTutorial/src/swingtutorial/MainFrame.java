@@ -18,35 +18,24 @@ import javax.swing.JTextArea;
  */
 public class MainFrame extends JFrame {
     
-    private JTextArea textArea;
-    private JButton button;
+    private TextPanel textPanel;
+    private Toolbar toolbar;
     
     public MainFrame() {    
-        
         super("Helo World");
-        
-        setLayout(new BorderLayout());
-        
-        textArea = new JTextArea();
-        button = new JButton("Click me");
-        
-        button.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                
-                textArea.append("Hello\n");
-                
-                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-            
-        });
-        
-        add(textArea, BorderLayout.CENTER);
-        add(button, BorderLayout.SOUTH);
         
         setSize(600, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setVisible(true);
+        setVisible(true);  
+        setLayout(new BorderLayout());   
+        
+        textPanel = new TextPanel();
+        toolbar = new Toolbar();
+        
+        toolbar.setTextPanel(textPanel);
+        
+        add(toolbar, BorderLayout.NORTH);        
+        add(textPanel, BorderLayout.CENTER);
+
     }
 }
