@@ -21,6 +21,7 @@ public class MainFrame extends JFrame {
     private TextPanel textPanel;
     private Toolbar toolbar;
     
+    // Constructor
     public MainFrame() {    
         super("Helo World");
         
@@ -32,7 +33,14 @@ public class MainFrame extends JFrame {
         textPanel = new TextPanel();
         toolbar = new Toolbar();
         
-        toolbar.setTextPanel(textPanel);
+        toolbar.setStringListener(new StringListener()
+        {
+        
+            public void textEmitted(String text) {
+                textPanel.appendText(text);
+            }        
+            
+        }); 
         
         add(toolbar, BorderLayout.NORTH);        
         add(textPanel, BorderLayout.CENTER);

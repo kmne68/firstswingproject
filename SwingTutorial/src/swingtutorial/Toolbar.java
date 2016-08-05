@@ -20,9 +20,9 @@ public class Toolbar extends JPanel implements ActionListener{
     
     private JButton btnHello;
     private JButton btnGoodbye;
+    private StringListener textListener;
     
-    private TextPanel textPanel;
-    
+    // Constructor
     public Toolbar() {
         btnHello = new JButton("Hello");
         btnGoodbye = new JButton("Goodbye");
@@ -37,9 +37,9 @@ public class Toolbar extends JPanel implements ActionListener{
     }
     
     
-    public void setTextPanel(TextPanel panel) {
+    public void setStringListener(StringListener listener) {
 
-        this.textPanel = panel;
+        this.textListener = listener;
     }
    
     
@@ -48,11 +48,21 @@ public class Toolbar extends JPanel implements ActionListener{
         
         JButton clicked = (JButton)e.getSource();
         
-        if (clicked == btnHello)
-            textPanel.appendText("Hello\n");
-        else
-            textPanel.appendText("Goodbye\n");
-// throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (clicked == btnHello) {
+            if(textListener != null) {
+                textListener.textEmitted("Hello?\n");
+            }
+        }
+        
+    //        textPanel.appendText("Hello\n");
+        else if (clicked == btnGoodbye) {
+            if (textListener != null) {
+                textListener.textEmitted("Goodbye!\n");
+            }
+        }
     }
+                
+    //        textPanel.appendText("Goodbye\n");
+// throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             
 }
