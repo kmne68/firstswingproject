@@ -5,10 +5,11 @@
  */
 package swingtutorial;
 
+import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.FlowLayout;
-import javafx.event.ActionEvent;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
@@ -24,6 +25,9 @@ public class Toolbar extends JPanel implements ActionListener{
     
     // Constructor
     public Toolbar() {
+        
+        setBorder(BorderFactory.createEtchedBorder());
+        
         btnHello = new JButton("Hello");
         btnGoodbye = new JButton("Goodbye");
         
