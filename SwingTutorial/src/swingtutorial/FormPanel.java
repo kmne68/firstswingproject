@@ -5,10 +5,12 @@
  */
 package swingtutorial;
 
+import java.awt.event.ActionListener;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
 
 import javax.swing.border.Border;
 import javax.swing.BorderFactory;
@@ -28,6 +30,7 @@ public class FormPanel extends JPanel {
     private JTextField txt_name;
     private JTextField txt_occupation;
     private JButton btn_ok;
+    private FormListener formListener;
     
     public FormPanel() {
         
@@ -41,6 +44,21 @@ public class FormPanel extends JPanel {
         txt_occupation = new JTextField(10);
         
         btn_ok = new JButton("OK");
+        btn_ok.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String name = txt_name.getText();
+                String occupation = txt_occupation.getText();
+                
+                FormEvent ev = new FormEvent(this, name, occupation);
+                
+                if(formListener != null)
+                    
+                    formListener.formEventOccurred(ev);
+            }
+        });
+       
         
         Border innerBorder = BorderFactory.createTitledBorder("Add Person");
         Border outerBorder = BorderFactory.createEmptyBorder(5,5,5,5);
@@ -96,5 +114,12 @@ public class FormPanel extends JPanel {
         gc.anchor = GridBagConstraints.FIRST_LINE_START;
         add(btn_ok, gc);
         
+
+        } // end FormPanel
+    
+    public void setFormListener(FormListener listener) {
+        
+        this.formListener = listener;
     }
+    
 }
