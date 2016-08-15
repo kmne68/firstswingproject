@@ -17,6 +17,7 @@ import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -39,6 +40,10 @@ public class FormPanel extends JPanel {
     private FormListener formListener;
     private JList lst_ages;
     private JComboBox cbx_employment;
+    private JCheckBox chk_citizen;
+    private JTextField txt_taxField;
+    private JLabel lbl_taxField;
+    
     
     public FormPanel() {
         
@@ -54,6 +59,22 @@ public class FormPanel extends JPanel {
         txt_occupation = new JTextField(10);
         lst_ages = new JList();
         cbx_employment = new JComboBox();
+        chk_citizen = new JCheckBox();
+        txt_taxField = new JTextField(10);
+        lbl_taxField = new JLabel("Tax ID: ");
+        
+        // Set up tax ID
+        lbl_taxField.setEnabled(false);
+        txt_taxField.setEnabled(false);
+        
+        chk_citizen.addActionListener(new ActionListener() {
+        
+        public void actionPerformed(ActionEvent arg0) {
+            boolean isTicked = chk_citizen.isSelected();
+            lbl_taxField.setEnabled(isTicked);
+            txt_taxField.setEnabled(isTicked);
+        }
+    });
         
         // ListBox creation
         DefaultListModel ageModel = new DefaultListModel();
@@ -85,10 +106,12 @@ public class FormPanel extends JPanel {
                 String occupation = txt_occupation.getText();
                 AgeCategory ageCategory = (AgeCategory) lst_ages.getSelectedValue();
                 String empStatus = (String) cbx_employment.getSelectedItem();
+                String taxID = txt_taxField.getText();
+                boolean usCitizen = chk_citizen.isSelected();
                 
                 System.out.println(empStatus); // + ", " + empStatus);
                 
-                FormEvent ev = new FormEvent(this, name, occupation, ageCategory.getID(), empStatus);
+                FormEvent ev = new FormEvent(this, name, occupation, ageCategory.getID(), empStatus, taxID, usCitizen);
                 
                 if(formListener != null)
                     
@@ -185,9 +208,48 @@ public class FormPanel extends JPanel {
 
         add(cbx_employment, gc); 
                 
+        
+                // ------------ Row 5  
+       
+        gc.gridy++;   
+        
+        gc.gridx = 0;
+        gc.anchor = GridBagConstraints.LINE_END;
+        gc.insets = new Insets(0, 0, 20, 0);        
+        add(new JLabel("U.S. Citizen: "), gc);        
+        
+        gc.weightx = 1;
+        gc.weighty = 0.2;        
+        
+        gc.gridx = 1;
+        gc.anchor = GridBagConstraints.FIRST_LINE_START;
+        gc.insets = new Insets(5, 0, 0, 0);        
+
+        add(chk_citizen, gc); 
+        
+        
+        // ------------ Row 6  
+       
+        gc.gridy++;  
+        
+        gc.weightx = 1;
+        gc.weighty = 0.1;        
+        
+        gc.gridx = 0;
+        gc.insets = new Insets(0, 0, 0, 5); 
+        gc.fill = GridBagConstraints.NONE;
+        gc.anchor = GridBagConstraints.LINE_END;
+       
+        add(lbl_taxField, gc);        
+        
+        gc.gridx = 1;
+        gc.anchor = GridBagConstraints.LINE_START;
+        gc.insets = new Insets(0, 0, 0, 0);        
+
+        add(txt_taxField, gc);         
                 
         
-        // ------------ Row 5
+        // ------------ Row 7
         gc.gridy++;           
         
         gc.weightx = 1;
