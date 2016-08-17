@@ -14,6 +14,7 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.border.Border;
 import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -22,6 +23,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 /**
@@ -43,6 +45,9 @@ public class FormPanel extends JPanel {
     private JCheckBox chk_citizen;
     private JTextField txt_taxField;
     private JLabel lbl_taxField;
+    private JRadioButton rdo_male;
+    private JRadioButton rdo_female;
+    private ButtonGroup grp_gender;
     
     
     public FormPanel() {
@@ -108,18 +113,30 @@ public class FormPanel extends JPanel {
                 String empStatus = (String) cbx_employment.getSelectedItem();
                 String taxID = txt_taxField.getText();
                 boolean usCitizen = chk_citizen.isSelected();
+                String gender = grp_gender.getSelection().getActionCommand();
                 
                 System.out.println(empStatus); // + ", " + empStatus);
                 
-                FormEvent ev = new FormEvent(this, name, occupation, ageCategory.getID(), empStatus, taxID, usCitizen);
+                FormEvent ev = new FormEvent(this, name, occupation, ageCategory.getID(), empStatus, taxID, usCitizen, gender);
                 
                 if(formListener != null)
                     
                     formListener.formEventOccurred(ev);
             }
         });
-       
         
+        
+        rdo_female = new JRadioButton("femal");
+        rdo_male = new JRadioButton("male");
+        grp_gender = new ButtonGroup();
+        rdo_female.setActionCommand("female");
+        rdo_male.setActionCommand("male");
+        rdo_female.setSelected(true);
+        
+        // Set up gender buttons
+        grp_gender.add(rdo_female);
+        grp_gender.add(rdo_male);
+                
         Border innerBorder = BorderFactory.createTitledBorder("Add Person");
         Border outerBorder = BorderFactory.createEmptyBorder(5,5,5,5);
         
@@ -248,12 +265,52 @@ public class FormPanel extends JPanel {
 
         add(txt_taxField, gc);         
                 
+        // ------------ Row 7  
+       
+        gc.gridy++;  
         
-        // ------------ Row 7
+        gc.weightx = 1;
+        gc.weighty = 0.05;        
+        
+        gc.gridx = 0;
+        gc.insets = new Insets(0, 0, 0, 0); 
+        gc.fill = GridBagConstraints.NONE;
+        gc.anchor = GridBagConstraints.LINE_END;
+       
+        add(new JLabel("Gender: "), gc);        
+        
+        gc.gridx = 1;
+        gc.anchor = GridBagConstraints.LINE_START;
+        gc.insets = new Insets(0, 0, 0, 0);        
+
+        add(rdo_male, gc);  
+        
+        // ------------ Row 8
+        
+                gc.gridy++;  
+        
+        gc.weightx = 1;
+        gc.weighty = 0.2;        
+        
+        gc.gridx = 0;
+        gc.insets = new Insets(0, 0, 0, 0); 
+        gc.fill = GridBagConstraints.NONE;
+        gc.anchor = GridBagConstraints.LINE_END;
+       
+     //   add(new JLabel("Gender: "), gc);        
+        
+        gc.gridx = 1;
+        gc.anchor = GridBagConstraints.LINE_START;
+        gc.insets = new Insets(0, 0, 0, 0);        
+
+        add(rdo_female, gc);  
+        
+        // ------------ Row 9
+        
         gc.gridy++;           
         
         gc.weightx = 1;
-        gc.weighty = 2.0;        
+        gc.weighty = 1.0;        
         
         gc.gridx = 1;
 

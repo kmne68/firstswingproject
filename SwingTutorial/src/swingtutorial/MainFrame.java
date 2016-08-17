@@ -54,8 +54,9 @@ public class MainFrame extends JFrame {
                 String employmentStatus = e.getEmploymentStatus();
                 boolean usCitizen = e.isUsCitizen();
                 String taxID = e.getTaxID();
+                String gender = e.getGender();
 
-                textPanel.appendText(name + ": " + occupation + ": " + ageCategory + " " + ": " + employmentStatus + usCitizen + taxID + "\n" );
+                textPanel.appendText(name + ": " + occupation + ": " + ageCategory + " " + ": " + employmentStatus+ ": " +  usCitizen + ": " +  taxID + ": " + gender +"\n" );
             }
         });
         
