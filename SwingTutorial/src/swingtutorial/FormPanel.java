@@ -11,6 +11,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 
 import javax.swing.border.Border;
 import javax.swing.BorderFactory;
@@ -67,10 +68,17 @@ public class FormPanel extends JPanel {
         chk_citizen = new JCheckBox();
         txt_taxField = new JTextField(10);
         lbl_taxField = new JLabel("Tax ID: ");
+        btn_ok = new JButton("OK");        
         
         // Set up tax ID
         lbl_taxField.setEnabled(false);
         txt_taxField.setEnabled(false);
+        
+        // Set up mnemonics
+        btn_ok.setMnemonic(KeyEvent.VK_O);
+        lbl_name.setDisplayedMnemonic(KeyEvent.VK_N);
+        lbl_name.setLabelFor(txt_name);
+        chk_citizen.setMnemonic(KeyEvent.VK_Z);
         
         chk_citizen.addActionListener(new ActionListener() {
         
@@ -102,7 +110,6 @@ public class FormPanel extends JPanel {
         lst_ages.setPreferredSize(new Dimension(110, 70));
         lst_ages.setBorder(BorderFactory.createEtchedBorder());
         
-        btn_ok = new JButton("OK");
         btn_ok.addActionListener(new ActionListener() {
 
             @Override
