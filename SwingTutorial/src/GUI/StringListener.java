@@ -3,15 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package swingtutorial;
-
-import java.util.EventListener;
+package GUI;
 
 /**
  *
  * @author kemery
  */
-public interface FormListener extends EventListener {
+public interface StringListener {
     
-    public void formEventOccurred(FormEvent e);
+    public void textEmitted(String text);
+            
 }

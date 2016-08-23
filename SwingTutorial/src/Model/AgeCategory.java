@@ -3,14 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package swingtutorial;
+package Model;
 
 /**
  *
  * @author kemery
  */
-public interface StringListener {
+public enum AgeCategory {
     
-    public void textEmitted(String text);
-            
+    child,
+    adult,
+    senior
 }
