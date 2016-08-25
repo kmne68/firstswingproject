@@ -5,12 +5,12 @@
  */
 package GUI;
 
-import com.sun.glass.events.KeyEvent;
 import java.awt.event.ActionListener;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
-import static java.util.Locale.filter;
+import java.awt.event.KeyEvent;
+//import static java.util.Locale.filter;
 import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFileChooser;
