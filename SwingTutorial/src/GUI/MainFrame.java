@@ -5,6 +5,8 @@
  */
 package GUI;
 
+import com.sun.glass.events.KeyEvent;
+import controller.Controller;
 import java.awt.event.ActionListener;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -32,8 +34,8 @@ public class MainFrame extends JFrame {
     private Toolbar toolbar;
     private FormPanel formPanel;
     private JFileChooser fileChooser;
+    private Controller controller;
     
-
     
     // Constructor
     public MainFrame() {    
@@ -49,6 +51,8 @@ public class MainFrame extends JFrame {
         textPanel = new TextPanel();
         toolbar = new Toolbar();
         formPanel = new FormPanel();
+        
+        controller = new Controller();
         
         fileChooser = new JFileChooser();
         fileChooser.addChoosableFileFilter(new PersonFileFilter());
@@ -67,15 +71,18 @@ public class MainFrame extends JFrame {
             
             public void formEventOccurred(FormEvent e) {
             
+        /*  This information is all passed to the controller in the call below
                 String name = e.getName();
                 String occupation = e.getOccupation();
                 int ageCategory = e.getAgeCategory();
                 String employmentStatus = e.getEmploymentStatus();
                 boolean usCitizen = e.isUsCitizen();
                 String taxID = e.getTaxID();
-                String gender = e.getGender();
+                String gender = e.getGender(); */
+                
+                controller.addPerson(e);
 
-                textPanel.appendText(name + ": " + occupation + ": " + ageCategory + " " + ": " + employmentStatus+ ": " +  usCitizen + ": " +  taxID + ": " + gender +"\n" );
+            //    textPanel.appendText(name + ": " + occupation + ": " + ageCategory + " " + ": " + employmentStatus+ ": " +  usCitizen + ": " +  taxID + ": " + gender +"\n" );
             }
         });
         
