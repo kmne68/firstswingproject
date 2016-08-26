@@ -11,6 +11,7 @@ import Model.Database;
 import Model.EmploymentCategory;
 import Model.Gender;
 import Model.Person;
+import java.util.List;
 
 /**
  * MainFrame uses the Controller when it wants to ad information to the database
@@ -19,6 +20,11 @@ import Model.Person;
 public class Controller {
     
     Database db = new Database();
+    
+    public List<Person> getPeople() {
+        
+        return db.getPeople();
+    }
     
     // ideally we would create a method to accept data from the MainFrame and then
     // create a person object with it. For now we are accepting data through a 
@@ -60,7 +66,7 @@ public class Controller {
         }
         else {
             employmentCategory = EmploymentCategory.other;
-            System.err.println(employmentStatus);
+        //    System.err.println(employmentStatus);
         }
         
         Gender genderCategory;
