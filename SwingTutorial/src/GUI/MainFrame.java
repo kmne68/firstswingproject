@@ -5,7 +5,6 @@
  */
 package GUI;
 
-import com.sun.glass.events.KeyEvent;
 import controller.Controller;
 import java.awt.event.ActionListener;
 import java.awt.BorderLayout;
