@@ -108,7 +108,7 @@ public class FormPanel extends JPanel {
         
         
         lst_ages.setPreferredSize(new Dimension(110, 70));
-        lst_ages.setBorder(BorderFactory.createEtchedBorder());
+        lst_ages.setBorder(BorderFactory.createBevelBorder(5));
         
         btn_ok.addActionListener(new ActionListener() {
 
@@ -121,9 +121,7 @@ public class FormPanel extends JPanel {
                 String taxID = txt_taxField.getText();
                 boolean usCitizen = chk_citizen.isSelected();
                 String gender = grp_gender.getSelection().getActionCommand();
-                
-                System.out.println(empStatus); // + ", " + empStatus);
-                
+                                
                 FormEvent ev = new FormEvent(this, name, occupation, ageCategory.getID(), empStatus, taxID, usCitizen, gender);
                 
                 if(formListener != null)

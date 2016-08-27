@@ -34,6 +34,7 @@ public class MainFrame extends JFrame {
     private FormPanel formPanel;
     private JFileChooser fileChooser;
     private Controller controller;
+    private TablePanel tablePanel;
     
     
     // Constructor
@@ -50,8 +51,11 @@ public class MainFrame extends JFrame {
         textPanel = new TextPanel();
         toolbar = new Toolbar();
         formPanel = new FormPanel();
+        tablePanel = new TablePanel();
         
         controller = new Controller();
+        
+        tablePanel.setData(controller.getPeople());
         
         fileChooser = new JFileChooser();
         fileChooser.addChoosableFileFilter(new PersonFileFilter());
@@ -66,6 +70,7 @@ public class MainFrame extends JFrame {
             
         }); 
         
+        // listens for form clicks
         formPanel.setFormListener(new FormListener() {
             
             public void formEventOccurred(FormEvent e) {
@@ -80,6 +85,7 @@ public class MainFrame extends JFrame {
                 String gender = e.getGender(); */
                 
                 controller.addPerson(e);
+                tablePanel.refresh();
 
             //    textPanel.appendText(name + ": " + occupation + ": " + ageCategory + " " + ": " + employmentStatus+ ": " +  usCitizen + ": " +  taxID + ": " + gender +"\n" );
             }
@@ -90,7 +96,8 @@ public class MainFrame extends JFrame {
         
         add(toolbar, BorderLayout.NORTH);  
         add(formPanel, BorderLayout.WEST);
-        add(textPanel, BorderLayout.CENTER);
+      //  add(textPanel, BorderLayout.CENTER);
+        add(tablePanel, BorderLayout.CENTER);
 
     }
     
