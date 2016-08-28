@@ -5,11 +5,13 @@
  */
 package Model;
 
+import java.io.Serializable;
+
 /**
  *
  * @author kemery
  */
-public class Person {
+public class Person implements Serializable {
     
     private static int count;
     private int id;
