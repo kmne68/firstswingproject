@@ -28,6 +28,12 @@ public class Controller {
         return db.getPeople();
     }
     
+    
+    public void removePerson(int index) {
+        
+        db.removePerson(index);
+    }
+    
     // ideally we would create a method to accept data from the MainFrame and then
     // create a person object with it. For now we are accepting data through a 
     // FormEvent

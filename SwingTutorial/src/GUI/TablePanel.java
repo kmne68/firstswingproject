@@ -8,6 +8,8 @@ package GUI;
 import Model.Person;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
@@ -26,6 +28,7 @@ public class TablePanel extends JPanel {
     private JTable table;
     private PersonTableModel tableModel;
     private JPopupMenu popup;
+    private PersonTableListener personTableListener;
     
     public TablePanel () {
         
@@ -43,13 +46,34 @@ public class TablePanel extends JPanel {
         
             @Override
             public void mousePressed(MouseEvent me) {
-               if(me.getButton() == MouseEvent.BUTTON3) {
+                
+                int row = table.rowAtPoint(me.getPoint());
+       //         System.out.println(row);
+                
+                table.getSelectionModel().setSelectionInterval(row, row);
+                if(me.getButton() == MouseEvent.BUTTON3) {
                    popup.show(table, me.getX(), me.getY());
                }
               //  super.mousePressed(me); 
             }
     });
-      
+        
+        removeItem.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+                int row = table.getSelectedRow();
+                
+                if(personTableListener != null) {
+                    personTableListener.rowDeleted(row);
+                    tableModel.fireTableRowsDeleted(row, row);
+                }
+                System.out.println(row);
+            }
+        });
+        
+    
         
         setLayout(new BorderLayout());
                 
@@ -66,5 +90,11 @@ public class TablePanel extends JPanel {
     public void refresh() {
         
         tableModel.fireTableDataChanged();
+    }
+    
+    
+    public void setPersonTableListener(PersonTableListener listener) {
+        
+        this.personTableListener = listener;
     }
 }
