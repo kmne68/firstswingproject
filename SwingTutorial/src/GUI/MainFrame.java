@@ -38,6 +38,7 @@ public class MainFrame extends JFrame {
     private JFileChooser fileChooser;
     private Controller controller;
     private TablePanel tablePanel;
+    private PreferencesDialog prefsDialog;
     
     
     // Constructor
@@ -55,6 +56,7 @@ public class MainFrame extends JFrame {
         toolbar = new Toolbar();
         formPanel = new FormPanel();
         tablePanel = new TablePanel();
+        prefsDialog = new PreferencesDialog(this);
         
         controller = new Controller();
         
@@ -128,8 +130,20 @@ public class MainFrame extends JFrame {
             fileMenu.addSeparator();
             fileMenu.add(exitItem);
             
+            JMenuItem prefsItem = new JMenuItem("Preferences...");
+            
+            JMenu showMenu = new JMenu("Show");            
             JMenu windowMenu = new JMenu("Window");            
-            JMenu showMenu = new JMenu("Show");
+            windowMenu.add(prefsItem);   
+            
+            prefsItem.addActionListener(new ActionListener() {
+
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    prefsDialog.setVisible(true);
+                }
+            } );
+            
             JCheckBoxMenuItem showFormItem = new JCheckBoxMenuItem("Person Form");
             showFormItem.setSelected(true);
             
