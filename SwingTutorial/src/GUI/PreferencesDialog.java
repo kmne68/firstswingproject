@@ -13,7 +13,9 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPasswordField;
 import javax.swing.JSpinner;
+import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
 /**
@@ -26,6 +28,8 @@ public class PreferencesDialog extends JDialog {
     private JButton btn_cancel;
     private JSpinner portSpinner;
     private SpinnerNumberModel spinnerModel;
+    private JTextField txt_username;
+    private JPasswordField password;
     
     public PreferencesDialog(JFrame parent) {
         super(parent, "Preferences", false);
@@ -36,11 +40,47 @@ public class PreferencesDialog extends JDialog {
         spinnerModel = new SpinnerNumberModel(3306, 0, 9999, 1);
         portSpinner = new JSpinner(spinnerModel);
         
+        txt_username = new JTextField(10);
+        password = new JPasswordField(10);
+        
+        password.setEchoChar('*');
+        
         setLayout(new GridBagLayout());
         
         GridBagConstraints gc = new GridBagConstraints();
         
         gc.gridy = 0;
+        
+        // first row
+        gc.weightx = 1;
+        gc.weighty = 1;
+        gc.fill = GridBagConstraints.NONE;
+        
+        gc.gridx = 0;
+        
+        add(new JLabel("User: "), gc);
+        
+        gc.gridx++;
+        add(txt_username, gc);  
+        
+        // next row
+        gc.gridy++;
+        
+        gc.weightx = 1;
+        gc.weighty = 1;
+        gc.fill = GridBagConstraints.NONE;
+        
+        gc.gridx = 0;
+        
+        add(new JLabel("Password: "), gc);
+        
+        gc.gridx++;
+        add(password, gc);         
+        
+        
+        // next row
+        gc.gridy++;
+        
         gc.weightx = 1;
         gc.weighty = 1;
         gc.fill = GridBagConstraints.NONE;
@@ -66,7 +106,10 @@ public class PreferencesDialog extends JDialog {
                 
                 Integer value = (Integer)portSpinner.getValue();
                 
-                System.out.println(value);
+                String user = txt_username.getText();
+                char[] passwordArray = password.getPassword();
+                
+                System.out.println(user + " " + new String(passwordArray));
                 setVisible(false);
             }
         });
