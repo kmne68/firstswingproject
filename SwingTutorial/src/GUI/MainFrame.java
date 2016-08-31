@@ -14,6 +14,7 @@ import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.prefs.Preferences;
 //import static java.util.Locale.filter;
 import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
@@ -39,6 +40,7 @@ public class MainFrame extends JFrame {
     private Controller controller;
     private TablePanel tablePanel;
     private PreferencesDialog prefsDialog;
+    private Preferences prefs;
     
     
     // Constructor
@@ -51,6 +53,9 @@ public class MainFrame extends JFrame {
         setVisible(true);  
         setLayout(new BorderLayout());  
         setJMenuBar(createMenuBar());
+        
+        prefs = Preferences.userRoot().node("db");
+                
         
         textPanel = new TextPanel();
         toolbar = new Toolbar();
@@ -65,11 +70,26 @@ public class MainFrame extends JFrame {
         tablePanel.setPersonTableListener(new PersonTableListener() {
             
             public void rowDeleted(int row) {
-                
                 controller.removePerson(row);
-                System.out.println(row);
+             //   System.out.println(row);
             }
         });
+        
+        prefsDialog.setPreferencesListener(new PreferencesListener() {
+            
+            public void preferencesSet(String user, String password, int port) {
+         //       System.out.println(user + ", " + password);
+                prefs.put("user", user);
+                prefs.put("password", password);
+                prefs.putInt("port", port);
+            }
+            
+        });
+        
+        String user = prefs.get("user", "");
+        String password = prefs.get("password", "");
+        Integer port = prefs.getInt("port", 3306);
+        prefsDialog.setDefaults(user, password, port);
         
         fileChooser = new JFileChooser();
         fileChooser.addChoosableFileFilter(new PersonFileFilter());
@@ -105,7 +125,6 @@ public class MainFrame extends JFrame {
             }
         });
         
-
         
         
         add(toolbar, BorderLayout.NORTH);  
@@ -144,8 +163,10 @@ public class MainFrame extends JFrame {
                 }
             } );
             
+            
             JCheckBoxMenuItem showFormItem = new JCheckBoxMenuItem("Person Form");
             showFormItem.setSelected(true);
+            
             
             showFormItem.addActionListener(new ActionListener() {
 
@@ -157,6 +178,7 @@ public class MainFrame extends JFrame {
                 }
             });
             
+            
             fileMenu.setMnemonic(KeyEvent.VK_F);
             exitItem.setMnemonic(KeyEvent.VK_X);
             
@@ -165,6 +187,7 @@ public class MainFrame extends JFrame {
             importDataItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I, ActionEvent.CTRL_MASK));
 
             importDataItem.addActionListener(new ActionListener() {
+                
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -197,6 +220,7 @@ public class MainFrame extends JFrame {
                 }
                 
             });
+            
             
             exitItem.addActionListener(new ActionListener() {
                 

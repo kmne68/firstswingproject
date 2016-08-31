@@ -31,6 +31,8 @@ public class PreferencesDialog extends JDialog {
     private JTextField txt_username;
     private JPasswordField password;
     
+    private PreferencesListener prefsListener;
+    
     public PreferencesDialog(JFrame parent) {
         super(parent, "Preferences", false);
         
@@ -104,12 +106,17 @@ public class PreferencesDialog extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
                 
-                Integer value = (Integer)portSpinner.getValue();
+                Integer port = (Integer)portSpinner.getValue();
                 
                 String user = txt_username.getText();
                 char[] passwordArray = password.getPassword();
                 
-                System.out.println(user + " " + new String(passwordArray));
+        //        System.out.println(user + " " + new String(passwordArray));
+                
+                if (prefsListener != null) {
+                    prefsListener.preferencesSet(user, new String (passwordArray), port);
+                    
+                }
                 setVisible(false);
             }
         });
@@ -127,6 +134,22 @@ public class PreferencesDialog extends JDialog {
         
         setSize(400, 300);
         setLocationRelativeTo(parent);
+        
     } 
+    
+    
+    public void setDefaults(String user, String password, int port) {
+        
+        txt_username.setText(user);
+        this.password.setText(password);  // this is confusing and I should probably change one of them
+        portSpinner.setValue(port);
+        
+    }
+
+    public void setPreferencesListener(PreferencesListener preferencesListener) {
+
+        this.prefsListener = preferencesListener;
+    }
+    
     
 }
