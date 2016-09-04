@@ -62,8 +62,8 @@ public class Database {
             throw new Exception("Driver not found");
         }
         
-        String connectionURL = "jdbc:mysql://localhost:3306/dandd";
-        con = DriverManager.getConnection(connectionURL, "kmne68", "1sbmLam!0i");
+        String connectionURL = "jdbc:mysql://localhost:3306/swing";
+        con = DriverManager.getConnection(connectionURL, "username", "password");
         
         System.out.println("Database connection successful!" + con);
     }
