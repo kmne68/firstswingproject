@@ -11,11 +11,16 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -24,6 +29,7 @@ import java.util.List;
 public class Database {
     
     private List<Person> people;
+    private Connection con;
     
     public Database() {
         people = new LinkedList<Person>();
@@ -44,6 +50,33 @@ public class Database {
     public List<Person> getPeople() {
         
         return Collections.unmodifiableList(people);
+    }
+    
+    
+    public void connect() throws Exception {
+        
+        if(con != null) return;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");            
+        } catch (ClassNotFoundException ex) {
+            throw new Exception("Driver not found");
+        }
+        
+        String connectionURL = "jdbc:mysql://localhost:3306/dandd";
+        con = DriverManager.getConnection(connectionURL, "kmne68", "1sbmLam!0i");
+        
+        System.out.println("Database connection successful!" + con);
+    }
+    
+    
+    public void disconnect() {
+        
+        if(con != null)
+            try {
+            con.close();
+        } catch (SQLException ex) {
+            System.out.println("Connection cannot be closed.");
+        }
     }
     
     
