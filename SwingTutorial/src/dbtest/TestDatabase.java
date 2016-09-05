@@ -5,7 +5,12 @@
  */
 package dbtest;
 
+import Model.AgeCategory;
 import Model.Database;
+import Model.EmploymentCategory;
+import Model.Gender;
+import Model.Person;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -25,7 +30,18 @@ public class TestDatabase {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-            db.disconnect();
+        
+        db.addPerson(new Person("Joe", "builder", AgeCategory.adult, EmploymentCategory.employed, "123-45-67890", true, Gender.female));
+        db.addPerson(new Person("Jill", "artist", AgeCategory.adult, EmploymentCategory.selfEmployed, null, true, Gender.female));
+
+        
+        try {
+            db.save();
+        } catch (SQLException ex) {
+            Logger.getLogger(TestDatabase.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        db.disconnect();
     }
 
     

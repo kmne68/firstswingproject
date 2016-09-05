@@ -13,14 +13,13 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -63,6 +62,7 @@ public class Database {
         }
         
         String connectionURL = "jdbc:mysql://localhost:3306/swing";
+        
         con = DriverManager.getConnection(connectionURL, "username", "password");
         
         System.out.println("Database connection successful!" + con);
@@ -77,6 +77,29 @@ public class Database {
         } catch (SQLException ex) {
             System.out.println("Connection cannot be closed.");
         }
+    }
+    
+    
+    public void save() throws SQLException {
+        
+        String checkSQL = "Select count(*) as count from people where id = ?";
+        
+        PreparedStatement checkStatement = con.prepareStatement(checkSQL);
+        
+        for(Person person: people) {
+            int id = person.getId();
+            
+            checkStatement.setInt(1, id);
+            
+            ResultSet checkResult = checkStatement.executeQuery();
+            
+            checkResult.next();
+            int count = checkResult.getInt(1);
+            
+            System.out.println("Count for person with ID " + id + " is " + count);
+        }
+        
+        checkStatement.close();
     }
     
     
