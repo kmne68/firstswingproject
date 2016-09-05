@@ -86,8 +86,19 @@ public class Database {
         
         PreparedStatement checkStatement = con.prepareStatement(checkSQL);
         
+        String insertSQL = "insert into people (id, name, age, employment_status, tax_id, us_citizen, gender, occupation) values (?,?,?,?,?,?,?,?) ";
+        PreparedStatement insertStatement = con.prepareStatement(insertSQL);
+        
         for(Person person: people) {
             int id = person.getId();
+            String name = person.getName();
+            String occupation = person.getOccupation();
+            AgeCategory age = person.getAgeCategory();
+            EmploymentCategory emp = person.getEmploymentCategory();
+            String taxID = person.getTaxID();
+            boolean isCitizen = person.isUsCitizen();
+            Gender gender = person.getGender();
+                    
             
             checkStatement.setInt(1, id);
             
@@ -96,9 +107,28 @@ public class Database {
             checkResult.next();
             int count = checkResult.getInt(1);
             
-            System.out.println("Count for person with ID " + id + " is " + count);
+            if(count == 0) {
+                System.out.println("Inserting person with ID " + id);
+                
+                int col = 1;
+                insertStatement.setInt(col++, id);
+                insertStatement.setString(col++, name);
+                insertStatement.setString(col++, age.name());
+                insertStatement.setString(col++, emp.name());
+                insertStatement.setString(col++, taxID);
+                insertStatement.setBoolean(col++, isCitizen);
+                insertStatement.setString(col++, gender.name());
+                insertStatement.setString(col++, occupation);
+                
+                insertStatement.executeUpdate();
+            }
+            else {
+                System.out.println("Updating person with ID " + id);
+            }
+            
         }
         
+        insertStatement.close();
         checkStatement.close();
     }
     
