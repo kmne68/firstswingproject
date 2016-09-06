@@ -89,6 +89,10 @@ public class Database {
         String insertSQL = "insert into people (id, name, age, employment_status, tax_id, us_citizen, gender, occupation) values (?,?,?,?,?,?,?,?) ";
         PreparedStatement insertStatement = con.prepareStatement(insertSQL);
         
+        String updateSQL = "update people set name=?, age=?, employment_status=?, tax_id=?, us_citizen=?, gender=?, occupation=? where id=?";
+        PreparedStatement updateStatement = con.prepareStatement(updateSQL);
+        
+        
         for(Person person: people) {
             int id = person.getId();
             String name = person.getName();
@@ -124,10 +128,23 @@ public class Database {
             }
             else {
                 System.out.println("Updating person with ID " + id);
+                
+                int col = 1;
+                updateStatement.setString(col++, name);
+                updateStatement.setString(col++, age.name());
+                updateStatement.setString(col++, emp.name());
+                updateStatement.setString(col++, taxID);
+                updateStatement.setBoolean(col++, isCitizen);
+                updateStatement.setString(col++, gender.name());
+                updateStatement.setString(col++, occupation);
+                updateStatement.setInt(col++, id);
+                
+                updateStatement.executeUpdate();
+                
             }
             
         }
-        
+        updateStatement.close();
         insertStatement.close();
         checkStatement.close();
     }

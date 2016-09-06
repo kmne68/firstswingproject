@@ -31,8 +31,11 @@ public class TestDatabase {
             ex.printStackTrace();
         }
         
-        db.addPerson(new Person("Joe", "builder", AgeCategory.adult, EmploymentCategory.employed, "123-45-67890", true, Gender.female));
-        db.addPerson(new Person("Jill", "artist", AgeCategory.adult, EmploymentCategory.selfEmployed, null, true, Gender.female));
+        // implement junit tests and systematically test updating every value
+        // and selectively update cells based on detected changes.
+        
+        db.addPerson(new Person("Joe", "lion tamer", AgeCategory.adult, EmploymentCategory.employed, "123-45-67890", true, Gender.female));
+        db.addPerson(new Person("Jill", "artist", AgeCategory.senior, EmploymentCategory.selfEmployed, null, true, Gender.female));
 
         
         try {
