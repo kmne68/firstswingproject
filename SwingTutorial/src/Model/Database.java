@@ -50,12 +50,18 @@ public class Database {
             String name = results.getString("name");
             String age = results.getString("age");
             String emp = results.getString("employment_status");
-            String tax = results.getString("tax_id");
+            String taxID = results.getString("tax_id");
             Boolean is_us = results.getBoolean("us_citizen");
             String gender = results.getString("gender");
             String occ = results.getString("occupation");                    
             
-   //         people.add(new Person());
+            // should add exception handling for enum values that can't be converted
+            Person person = new Person(id, name, occ, AgeCategory.valueOf(age), EmploymentCategory.valueOf(emp), taxID, is_us, Gender.valueOf(gender));
+            
+            people.add(person);
+            
+            System.out.println(person);
+            
         }
         
         results.close();

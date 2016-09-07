@@ -43,16 +43,9 @@ public class Person implements Serializable {
         public Person(int id, String name, String occupation, AgeCategory ageCategory, EmploymentCategory employmentCategory,
             String taxID, boolean usCitizen, Gender gender) {
         
-        this.id = id;
-        this.name = name;
-        this.occupation = occupation;
-        this.ageCategory = ageCategory;
-        this.employmentCategory = employmentCategory;
-        this.taxID = taxID;
-        this.usCitizen = usCitizen;
-        this.gender = gender;
+        this(name, occupation, ageCategory, employmentCategory, taxID, usCitizen, gender);
         
-        count++;
+        this.id = id;
     }
 
     /**
@@ -167,5 +160,9 @@ public class Person implements Serializable {
         this.gender = gender;
     }
     
+    
+    public String toString() {
+        return id + ": " + name;
+    }
     
 }
