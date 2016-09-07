@@ -16,6 +16,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -32,6 +33,33 @@ public class Database {
     
     public Database() {
         people = new LinkedList<Person>();
+    }
+    
+    
+    public void load() throws SQLException {
+        
+        people.clear();
+        
+        Statement selectStatement = con.createStatement();
+        
+        String sql = "select id, name, age, employment_status, tax_id, us_citizen, gender, occupation from people order by name";
+        ResultSet results = selectStatement.executeQuery(sql);
+        
+        while(results.next()) {
+            int id = results.getInt("id");
+            String name = results.getString("name");
+            String age = results.getString("age");
+            String emp = results.getString("employment_status");
+            String tax = results.getString("tax_id");
+            Boolean is_us = results.getBoolean("us_citizen");
+            String gender = results.getString("gender");
+            String occ = results.getString("occupation");                    
+            
+   //         people.add(new Person());
+        }
+        
+        results.close();
+        selectStatement.close();
     }
     
     
@@ -63,7 +91,7 @@ public class Database {
         
         String connectionURL = "jdbc:mysql://localhost:3306/swing";
         
-        con = DriverManager.getConnection(connectionURL, "username", "password");
+        con = DriverManager.getConnection(connectionURL, "kmne68", "1sbmLam!0i");
         
         System.out.println("Database connection successful!" + con);
     }
