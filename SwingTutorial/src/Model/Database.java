@@ -97,7 +97,7 @@ public class Database {
         
         String connectionURL = "jdbc:mysql://localhost:3306/swing";
         
-        con = DriverManager.getConnection(connectionURL, "kmne68", "1sbmLam!0i");
+        con = DriverManager.getConnection(connectionURL, "username", "password");
         
         System.out.println("Database connection successful!" + con);
     }

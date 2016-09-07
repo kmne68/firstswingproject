@@ -12,6 +12,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.prefs.Preferences;
@@ -95,12 +96,31 @@ public class MainFrame extends JFrame {
         fileChooser.addChoosableFileFilter(new PersonFileFilter());
         
         
-        toolbar.setStringListener(new StringListener()
+        toolbar.setToolbarListener(new ToolbarListener()
         {
         
-            public void textEmitted(String text) {
-                textPanel.appendText(text);
+            public void saveEventOccurred() {
+                
+                connect();
+                try {
+                    controller.save();
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(MainFrame.this, "Cannot save to database", "Database save error.", JOptionPane.ERROR_MESSAGE);
+                }
             }        
+
+            @Override
+            public void refreshEventOccurred() {
+                
+                connect();
+                try {
+                    controller.load();
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(MainFrame.this, "Cannot load from database", "Database read error.", JOptionPane.ERROR_MESSAGE);
+                }
+                
+                tablePanel.refresh();
+            }
             
         }); 
         
@@ -132,6 +152,18 @@ public class MainFrame extends JFrame {
       //  add(textPanel, BorderLayout.CENTER);
         add(tablePanel, BorderLayout.CENTER);
 
+    }
+    
+    
+    private void connect() {
+        
+                try {
+                    controller.connect();
+                }
+                catch (Exception ex) {
+                    JOptionPane.showMessageDialog(MainFrame.this, "Cannot connect to database", "Database connection problem.", JOptionPane.ERROR_MESSAGE);
+                }
+        
     }
     
             

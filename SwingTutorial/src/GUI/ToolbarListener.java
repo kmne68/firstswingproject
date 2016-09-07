@@ -9,8 +9,9 @@ package GUI;
  *
  * @author kemery
  */
-public interface StringListener {
+public interface ToolbarListener {
     
-    public void textEmitted(String text);
+    public void saveEventOccurred();
+    public void refreshEventOccurred();
             
 }
