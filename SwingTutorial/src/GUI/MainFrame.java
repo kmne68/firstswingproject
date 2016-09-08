@@ -11,6 +11,9 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -50,7 +53,7 @@ public class MainFrame extends JFrame {
         
         setSize(600, 500);
         setMinimumSize(new Dimension(600, 500));
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setVisible(true);  
         setLayout(new BorderLayout());  
         setJMenuBar(createMenuBar());
@@ -144,6 +147,21 @@ public class MainFrame extends JFrame {
             //    textPanel.appendText(name + ": " + occupation + ": " + ageCategory + " " + ": " + employmentStatus+ ": " +  usCitizen + ": " +  taxID + ": " + gender +"\n" );
             }
         });
+        
+        
+        addWindowListener(new WindowAdapter() {
+            
+            public void windowClosing(WindowEvent e) {
+                
+                System.out.println("Window closing");
+                controller.disconnect();
+                dispose();
+                System.gc();
+            }
+           
+            
+        });
+        
         
         
         
@@ -264,10 +282,13 @@ public class MainFrame extends JFrame {
                     // Demo changing an icon (JOptionPane.QUESTION_MESSAGE)
                     JOptionPane.showInputDialog(MainFrame.this, "Enter your user name.", "Enter User Name", JOptionPane.OK_OPTION | JOptionPane.QUESTION_MESSAGE);
                     
-                    int action = JOptionPane.showConfirmDialog (MainFrame.this, "Do you really want to exit?", "Confrim Exit", JOptionPane.OK_CANCEL_OPTION);
+                    int action = JOptionPane.showConfirmDialog (MainFrame.this, "Do you really want to exit?", "Confirm Exit", JOptionPane.OK_CANCEL_OPTION);
                     
                     if(action == JOptionPane.OK_OPTION) {
-                        System.exit(0);
+                        WindowListener[] listeners = getWindowListeners();
+                        
+                        for(WindowListener listener: listeners)
+                            listener.windowClosing(new WindowEvent(MainFrame.this, 0));
                     }
                 }
             });
