@@ -8,8 +8,10 @@ package GUI;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.FlowLayout;
+import java.net.URL;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
@@ -31,6 +33,9 @@ public class Toolbar extends JPanel implements ActionListener{
         btn_save = new JButton("Save");
         btn_refresh = new JButton("Refresh");
         
+        btn_save.setIcon(createIcon("/images/Save16.gif"));
+        btn_refresh.setIcon(createIcon("/images/Refresh16.gif"));
+        
         btn_save.addActionListener(this);
         btn_refresh.addActionListener(this);        
         
@@ -38,6 +43,20 @@ public class Toolbar extends JPanel implements ActionListener{
         
         add(btn_save);
         add(btn_refresh);
+    }
+    
+    
+    private ImageIcon createIcon(String path) {
+        
+        URL url = getClass().getResource(path);
+        
+        if(url == null) {
+            
+            System.err.println("Unable to load image: " + path);
+        }
+        ImageIcon icon = new ImageIcon(url);
+          
+        return icon;
     }
     
     
