@@ -165,7 +165,7 @@ public class MainFrame extends JFrame {
         
         
         
-        add(toolbar, BorderLayout.NORTH);  
+        add(toolbar, BorderLayout.PAGE_START);  
         add(formPanel, BorderLayout.WEST);
       //  add(textPanel, BorderLayout.CENTER);
         add(tablePanel, BorderLayout.CENTER);

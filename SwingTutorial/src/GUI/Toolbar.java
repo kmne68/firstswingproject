@@ -14,12 +14,13 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JToolBar;
 
 /**
  *
  * @author kemery
  */
-public class Toolbar extends JPanel implements ActionListener{
+public class Toolbar extends JToolBar implements ActionListener{
     
     private JButton btn_save;
     private JButton btn_refresh;
@@ -28,20 +29,25 @@ public class Toolbar extends JPanel implements ActionListener{
     // Constructor
     public Toolbar() {
         
-        setBorder(BorderFactory.createEtchedBorder());
+        // Remove border to make the toolbar dragable
+        // setBorder(BorderFactory.createEtchedBorder());
+        setFloatable(false);
         
-        btn_save = new JButton("Save");
-        btn_refresh = new JButton("Refresh");
+        btn_save = new JButton();
+        btn_refresh = new JButton();
+        btn_save.setToolTipText("Save");
         
         btn_save.setIcon(createIcon("/images/Save16.gif"));
         btn_refresh.setIcon(createIcon("/images/Refresh16.gif"));
+        btn_refresh.setToolTipText("Refresh");
         
         btn_save.addActionListener(this);
         btn_refresh.addActionListener(this);        
         
-        setLayout(new FlowLayout(FlowLayout.LEFT));
+        // setLayout(new FlowLayout(FlowLayout.LEFT));
         
         add(btn_save);
+        // addSeparator();
         add(btn_refresh);
     }
     
