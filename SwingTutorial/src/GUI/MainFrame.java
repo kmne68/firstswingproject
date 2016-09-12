@@ -29,6 +29,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JSplitPane;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
 
@@ -47,6 +48,7 @@ public class MainFrame extends JFrame {
     private PreferencesDialog prefsDialog;
     private Preferences prefs;
     private JSplitPane splitPane;
+    private JTabbedPane tabbedPane;
     
     
     // Constructor
@@ -68,9 +70,14 @@ public class MainFrame extends JFrame {
         formPanel = new FormPanel();
         tablePanel = new TablePanel();
         prefsDialog = new PreferencesDialog(this);
-        splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, formPanel, tablePanel);
+        tabbedPane = new JTabbedPane();
+        splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, formPanel, tabbedPane);
         
         splitPane.setOneTouchExpandable(true);
+        
+        tabbedPane.addTab("Person Database", tablePanel);
+        tabbedPane.addTab("Messages", textPanel);
+        
         controller = new Controller();
         
         tablePanel.setData(controller.getPeople());
