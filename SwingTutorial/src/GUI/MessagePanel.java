@@ -38,6 +38,13 @@ public class MessagePanel extends JPanel {
                 DefaultMutableTreeNode node = (DefaultMutableTreeNode) serverTree.getLastSelectedPathComponent();
                 
                 Object userObject = node.getUserObject();
+                
+                if(userObject instanceof ServerInfo) {
+                   
+                    int id = ((ServerInfo)userObject).getId();
+                    System.out.println("ServerInfo userObject ID = " + id);
+                }
+                
                 System.out.println(userObject);
             }
             
@@ -54,18 +61,18 @@ public class MessagePanel extends JPanel {
         DefaultMutableTreeNode top = new DefaultMutableTreeNode("Servers");
 
         DefaultMutableTreeNode branch1 = new DefaultMutableTreeNode("USA");
-        DefaultMutableTreeNode server1 = new DefaultMutableTreeNode("New York");
-        DefaultMutableTreeNode server2 = new DefaultMutableTreeNode("Boston");
-        DefaultMutableTreeNode server3 = new DefaultMutableTreeNode("Los Angeles");  
+        DefaultMutableTreeNode server1 = new DefaultMutableTreeNode(new ServerInfo("New York", 0));
+        DefaultMutableTreeNode server2 = new DefaultMutableTreeNode(new ServerInfo("Boston", 1));
+        DefaultMutableTreeNode server3 = new DefaultMutableTreeNode(new ServerInfo("Los Angeles", 2));  
 
         branch1.add(server1);
         branch1.add(server2);
         branch1.add(server3);
 
         DefaultMutableTreeNode branch2 = new DefaultMutableTreeNode("UK");
-        DefaultMutableTreeNode server4 = new DefaultMutableTreeNode("London");
-        DefaultMutableTreeNode server5 = new DefaultMutableTreeNode("Oxford");
-        DefaultMutableTreeNode server6 = new DefaultMutableTreeNode("Edinburgh");
+        DefaultMutableTreeNode server4 = new DefaultMutableTreeNode(new ServerInfo("London", 3));
+        DefaultMutableTreeNode server5 = new DefaultMutableTreeNode(new ServerInfo("Oxford", 4));
+        DefaultMutableTreeNode server6 = new DefaultMutableTreeNode(new ServerInfo("Edinburgh", 5));
 
         branch2.add(server4);
         branch2.add(server5);
@@ -77,4 +84,29 @@ public class MessagePanel extends JPanel {
         return top;
     }
     
+}
+
+
+
+class ServerInfo {
+    
+    private String name;
+    private int id;
+    
+    public ServerInfo(String name, int id) {
+        
+        this.name = name;
+        this.id = id;
+    }
+    
+    
+    public int getId () {
+        
+        return id;
+    }
+    
+    public String toString() {
+        
+        return name;
+    }
 }
