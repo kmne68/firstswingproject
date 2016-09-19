@@ -9,6 +9,8 @@ import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
+import javax.swing.event.CellEditorListener;
+import javax.swing.event.ChangeEvent;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -38,23 +40,20 @@ public class MessagePanel extends JPanel {
         // prevent selection of more than one leaf
         serverTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
         
-        serverTree.addTreeSelectionListener(new TreeSelectionListener() {
+        treeCellEditor.addCellEditorListener(new CellEditorListener() {
 
             @Override
-            public void valueChanged(TreeSelectionEvent e) {
+            public void editingStopped(ChangeEvent e) {
                 
-                DefaultMutableTreeNode node = (DefaultMutableTreeNode) serverTree.getLastSelectedPathComponent();
+                ServerInfo info = (ServerInfo) treeCellEditor.getCellEditorValue();
                 
-                Object userObject = node.getUserObject();
-                
-                if(userObject instanceof ServerInfo) {
-                   
-                    int id = ((ServerInfo)userObject).getId();
-                    System.out.println("ServerInfo userObject ID = " + id);
-                }
-                
-                System.out.println(userObject);
+                System.out.println(info + ": " + info.getId() + "; " + info.isChecked());
             }
+
+            @Override
+            public void editingCanceled(ChangeEvent e) {
+            }
+            
             
         });
         
@@ -96,38 +95,4 @@ public class MessagePanel extends JPanel {
 
 
 
-class ServerInfo {
-    
-    private String name;
-    private int id;
-    private boolean checked;
-    
-    public ServerInfo(String name, int id, boolean checked) {
-        
-        this.name = name;
-        this.id = id;
-        this.checked = checked;
-        
-    }
-    
-    
-    public int getId () {
-        
-        return id;
-    }
-    
-    public String toString() {
-        
-        return name;
-    }
-    
-    public boolean isChecked() {
-        return checked;
-    }
-    
-    
-    public void setChecked(boolean checked) {
-        
-        this.checked = checked;
-    }
-}
+
