@@ -8,6 +8,7 @@ package GUI;
 import Model.Message;
 import controller.MessageServer;
 import java.awt.BorderLayout;
+import java.awt.Window;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -18,6 +19,7 @@ import java.util.logging.Logger;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
+import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 import javax.swing.event.CellEditorListener;
 import javax.swing.event.ChangeEvent;
@@ -40,6 +42,8 @@ public class MessagePanel extends JPanel {
     private Set<Integer> selectedServers;
     private MessageServer messageServer;
     
+    private ProgressDialog progressDialog;
+    
     public MessagePanel() {
         
         messageServer = new MessageServer();
@@ -55,6 +59,8 @@ public class MessagePanel extends JPanel {
         serverTree.setCellRenderer(treeCellRenderer);
         serverTree.setCellEditor(treeCellEditor);
         serverTree.setEditable(true);
+        
+        progressDialog = new ProgressDialog((Window)getParent());
         
         // prevent selection of more than one leaf
         serverTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
@@ -100,6 +106,16 @@ public class MessagePanel extends JPanel {
         
         System.out.println("Messages waiting " + messageServer.getMessageCount());
         
+        SwingUtilities.invokeLater(new Runnable() {
+            
+            public void run() {
+                
+                System.out.println("Showing modal dialog.");
+                progressDialog.setVisible(true);
+                System.out.println("Finished showing modal dialog.");
+            }
+        });
+                
         SwingWorker<List<Message>, Integer> worker = new SwingWorker<List<Message>, Integer>() {
 
             @Override
@@ -109,10 +125,15 @@ public class MessagePanel extends JPanel {
                     List<Message> retrievedMessages = get();
                     System.out.println("Retrieved " + retrievedMessages.size() + " messages");
                 } catch (InterruptedException ex) {
-                    Logger.getLogger(MessagePanel.class.getName()).log(Level.SEVERE, null, ex);
+                    
+                    ex.printStackTrace();
+                    // Logger.getLogger(MessagePanel.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (ExecutionException ex) {
-                    Logger.getLogger(MessagePanel.class.getName()).log(Level.SEVERE, null, ex);
+                    ex.printStackTrace();
+                    // Logger.getLogger(MessagePanel.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                
+                progressDialog.setVisible(false);
             }
             
             
