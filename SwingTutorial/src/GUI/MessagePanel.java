@@ -16,6 +16,7 @@ import java.util.TreeSet;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
@@ -44,7 +45,7 @@ public class MessagePanel extends JPanel {
     
     private ProgressDialog progressDialog;
     
-    public MessagePanel() {
+    public MessagePanel(JFrame parent) {
         
         messageServer = new MessageServer();
         selectedServers = new TreeSet<Integer>();
@@ -60,7 +61,7 @@ public class MessagePanel extends JPanel {
         serverTree.setCellEditor(treeCellEditor);
         serverTree.setEditable(true);
         
-        progressDialog = new ProgressDialog((Window)getParent());
+        progressDialog = new ProgressDialog(parent);
         
         // prevent selection of more than one leaf
         serverTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
@@ -104,17 +105,9 @@ public class MessagePanel extends JPanel {
     
     private void retrieveMessages() {
         
-        System.out.println("Messages waiting " + messageServer.getMessageCount());
-        
-        SwingUtilities.invokeLater(new Runnable() {
+        progressDialog.setMaximum(messageServer.getMessageCount());
             
-            public void run() {
-                
-                System.out.println("Showing modal dialog.");
-                progressDialog.setVisible(true);
-                System.out.println("Finished showing modal dialog.");
-            }
-        });
+        progressDialog.setVisible(true);
                 
         SwingWorker<List<Message>, Integer> worker = new SwingWorker<List<Message>, Integer>() {
 
@@ -142,7 +135,7 @@ public class MessagePanel extends JPanel {
                 
                 int retrieved = counts.get(counts.size() - 1);
                 
-                System.out.println("Got " + retrieved + " messages.");
+                progressDialog.setValue(retrieved);
             }
             
             @Override
