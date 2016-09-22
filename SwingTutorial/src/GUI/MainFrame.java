@@ -54,7 +54,7 @@ public class MainFrame extends JFrame {
     
     // Constructor
     public MainFrame() {    
-        super("Helo World");
+        super("Hello World");
         
         setSize(600, 500);
         setMinimumSize(new Dimension(600, 500));

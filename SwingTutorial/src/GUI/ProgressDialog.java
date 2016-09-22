@@ -29,6 +29,9 @@ public class ProgressDialog extends JDialog {
         
         btn_cancel = new JButton("Cancel");
         progressBar = new JProgressBar();
+        progressBar.setStringPainted(true);
+        progressBar.setString("Retrieving messges...");
+        progressBar.setMaximum(10);
         
         // progressBar.setIndeterminate(true); // Enable if the maximum is not known
         
@@ -56,16 +59,15 @@ public class ProgressDialog extends JDialog {
     
     public void setValue(int value) {
         
+        int progress = 100 * value / progressBar.getMaximum();
+        progressBar.setString(String.format("%d%% complete", progress));
+        
         progressBar.setValue(value);
     }
     
     
     @Override
-    public void setVisible(final boolean visible) {
-        
-        
-        
-        
+    public void setVisible(final boolean visible) {        
         
         SwingUtilities.invokeLater(new Runnable() {
 
