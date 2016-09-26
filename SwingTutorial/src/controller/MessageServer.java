@@ -95,7 +95,7 @@ class MessageIterator implements Iterator {
         try {
             Thread.sleep(1000); // to simulate a slow server
         } catch (InterruptedException ex) {
-            Logger.getLogger(MessageIterator.class.getName()).log(Level.SEVERE, null, ex);
+            
         }
         return iterator.next();
     }

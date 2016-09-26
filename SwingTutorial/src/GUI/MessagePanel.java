@@ -34,7 +34,7 @@ import javax.swing.tree.TreeSelectionModel;
  *
  * @author kemery
  */
-public class MessagePanel extends JPanel {
+public class MessagePanel extends JPanel implements ProgressDialogListener {
     
     private JTree serverTree;
     private ServerTreeCellRenderer treeCellRenderer; 
@@ -44,6 +44,7 @@ public class MessagePanel extends JPanel {
     private MessageServer messageServer;
     
     private ProgressDialog progressDialog;
+    private SwingWorker<List<Message>, Integer> worker;
     
     public MessagePanel(JFrame parent) {
         
@@ -61,7 +62,8 @@ public class MessagePanel extends JPanel {
         serverTree.setCellEditor(treeCellEditor);
         serverTree.setEditable(true);
         
-        progressDialog = new ProgressDialog(parent);
+        progressDialog = new ProgressDialog(parent, "Message downloading...");
+        progressDialog.setProgressDialogListener(this);
         
         // prevent selection of more than one leaf
         serverTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
@@ -109,10 +111,15 @@ public class MessagePanel extends JPanel {
             
         progressDialog.setVisible(true);
                 
-        SwingWorker<List<Message>, Integer> worker = new SwingWorker<List<Message>, Integer>() {
+        worker = new SwingWorker<List<Message>, Integer>() {
 
             @Override
             protected void done() {
+                
+                progressDialog.setVisible(false);
+                
+                if(isCancelled())
+                    return;
                 
                 try {
                     List<Message> retrievedMessages = get();
@@ -126,7 +133,7 @@ public class MessagePanel extends JPanel {
                     // Logger.getLogger(MessagePanel.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 
-                progressDialog.setVisible(false);
+                
             }
             
             
@@ -147,6 +154,9 @@ public class MessagePanel extends JPanel {
                 
                 for(Message message: messageServer) {
               
+                    if(isCancelled())
+                        break;
+                    
                     System.out.println(message.getTitle());
                     
                     retrievedMessages.add(message);
@@ -191,6 +201,15 @@ public class MessagePanel extends JPanel {
         top.add(branch2);
 
         return top;
+    }
+
+    @Override
+    public void progressDialogCancelled() {
+        
+        if(worker != null) {
+            
+            worker.cancel(true);
+        }
     }
     
 }
