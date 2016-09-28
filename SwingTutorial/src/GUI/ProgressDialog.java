@@ -14,6 +14,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.awt.Cursor;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JProgressBar;
@@ -120,6 +121,14 @@ public class ProgressDialog extends JDialog {
                 else {
                     progressBar.setValue(0);
                 }
+                
+                if(visible) {                    
+                    setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+                }
+                else {
+                    setCursor(Cursor.getDefaultCursor());
+                }
+                
                 ProgressDialog.super.setVisible(visible);
             }
         });
