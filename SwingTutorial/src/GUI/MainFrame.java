@@ -39,7 +39,6 @@ import javax.swing.KeyStroke;
  */
 public class MainFrame extends JFrame {
     
-    private TextPanel textPanel;
     private Toolbar toolbar;
     private FormPanel formPanel;
     private JFileChooser fileChooser;
@@ -65,8 +64,6 @@ public class MainFrame extends JFrame {
         
         prefs = Preferences.userRoot().node("db");
                 
-        
-        textPanel = new TextPanel();
         toolbar = new Toolbar();
         formPanel = new FormPanel();
         tablePanel = new TablePanel();
