@@ -17,6 +17,7 @@ import java.util.TreeSet;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -38,7 +39,7 @@ import javax.swing.tree.TreeSelectionModel;
  * @author kemery
  */
 public class MessagePanel extends JPanel implements ProgressDialogListener {
-    
+        
     private JTree serverTree;
     private ServerTreeCellRenderer treeCellRenderer; 
     private ServerTreeCellEditor treeCellEditor;
@@ -53,8 +54,12 @@ public class MessagePanel extends JPanel implements ProgressDialogListener {
     private JList messageList;
     private JSplitPane upperPane;
     private JSplitPane lowerPane;
+    private DefaultListModel messageListModel;
     
     public MessagePanel(JFrame parent) {
+        
+        
+        messageListModel = new DefaultListModel();
         
         messageServer = new MessageServer();
         selectedServers = new TreeSet<Integer>();
@@ -75,6 +80,9 @@ public class MessagePanel extends JPanel implements ProgressDialogListener {
         
         // prevent selection of more than one leaf
         serverTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+        
+        
+        messageServer.setSelectedServers(selectedServers);
         
         treeCellEditor.addCellEditorListener(new CellEditorListener() {
 
@@ -110,9 +118,9 @@ public class MessagePanel extends JPanel implements ProgressDialogListener {
         setLayout(new BorderLayout());
         
         textPanel = new TextPanel();
-        messageList = new JList();
+        messageList = new JList(messageListModel);
         
-        lowerPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, messageList, textPanel);
+        lowerPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, new JScrollPane(messageList), textPanel);
         upperPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, new JScrollPane(serverTree), lowerPane);
         
         lowerPane.setMinimumSize(new Dimension(10, 100));
@@ -122,6 +130,12 @@ public class MessagePanel extends JPanel implements ProgressDialogListener {
         lowerPane.setResizeWeight(0.5);
         
         add(upperPane, BorderLayout.CENTER);
+    }
+    
+    
+    public void refresh() {
+        
+        retrieveMessages();
     }
     
     
@@ -141,9 +155,18 @@ public class MessagePanel extends JPanel implements ProgressDialogListener {
                 if(isCancelled())
                     return;
                 
+               
+                
                 try {
-                    List<Message> retrievedMessages = get();
-                    System.out.println("Retrieved " + retrievedMessages.size() + " messages");
+                    List<Message> retrievedMessages = get(); 
+                    
+                    messageListModel.removeAllElements();
+                
+                    for(Message message: retrievedMessages) {
+
+                        messageListModel.addElement(message.getTitle());
+                    }
+                    
                 } catch (InterruptedException ex) {
                     
                     ex.printStackTrace();

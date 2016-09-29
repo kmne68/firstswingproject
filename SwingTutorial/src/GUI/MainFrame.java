@@ -32,6 +32,8 @@ import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 /**
  *
@@ -87,6 +89,23 @@ public class MainFrame extends JFrame {
                 controller.removePerson(row);
              //   System.out.println(row);
             }
+        });
+        
+        
+        tabbedPane.addChangeListener(new ChangeListener() {
+
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                
+                int tabIndex = tabbedPane.getSelectedIndex();
+                
+                if (tabIndex == 1) {
+                    
+                    messagePanel.refresh();
+                }
+            }
+           
+            
         });
         
         prefsDialog.setPreferencesListener(new PreferencesListener() {
