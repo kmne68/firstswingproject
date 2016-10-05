@@ -26,7 +26,7 @@ public class TextPanel extends JPanel {
         setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 5));
         
         textArea = new JTextArea();
-        
+        textArea.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         setLayout(new BorderLayout());
         
         add(new JScrollPane(textArea), BorderLayout.CENTER);
@@ -36,6 +36,12 @@ public class TextPanel extends JPanel {
     public void appendText(String text)
     {
         textArea.append(text);
+    }
+    
+    
+    public void setText(String text) {
+        
+        textArea.setText(text);
     }
     
 }
