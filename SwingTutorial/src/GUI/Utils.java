@@ -5,7 +5,12 @@
  */
 package GUI;
 
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.io.IOException;
 import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 
 /**
@@ -42,6 +47,27 @@ public class Utils {
         ImageIcon icon = new ImageIcon(url);
           
         return icon;
+    }
+    
+    
+    public static Font createFont(String path) {
+        
+        URL url = System.class.getResource(path);
+        
+        if(url == null) {
+            
+            System.err.println("Unable to load font: " + path);
+        }
+        Font font = null;        
+        try {
+            font = Font.createFont(Font.TRUETYPE_FONT, url.openStream());
+        } catch (FontFormatException ex) {
+            System.err.println("Bad format in font file: " + path);
+        } catch (IOException ex) {
+            System.err.println("Unable to read from file: " + path);
+        }
+          
+        return font;
     }
     
     

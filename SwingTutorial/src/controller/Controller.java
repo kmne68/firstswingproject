@@ -30,6 +30,12 @@ public class Controller {
     }
     
     
+    public void configure(int port, String user, String password) throws Exception {
+        
+        db.configure(port, user, password);
+    }
+    
+    
     public void removePerson(int index) {
         
         db.removePerson(index);

@@ -115,6 +115,12 @@ public class MainFrame extends JFrame {
                 prefs.put("user", user);
                 prefs.put("password", password);
                 prefs.putInt("port", port);
+                
+                try {
+                    controller.configure(port, user, password);
+                } catch (Exception ex) {
+                    Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
             
         });
@@ -123,6 +129,12 @@ public class MainFrame extends JFrame {
         String password = prefs.get("password", "");
         Integer port = prefs.getInt("port", 3306);
         prefsDialog.setDefaults(user, password, port);
+        
+        try {
+            controller.configure(port, user, password);
+        } catch (Exception ex) {
+            System.err.println("Unable to connect to the database.");
+        }
         
         fileChooser = new JFileChooser();
         fileChooser.addChoosableFileFilter(new PersonFileFilter());
