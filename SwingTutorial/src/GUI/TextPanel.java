@@ -7,6 +7,7 @@ package GUI;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
@@ -27,6 +28,8 @@ public class TextPanel extends JPanel {
         
         textArea = new JTextArea();
         textArea.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        
+        textArea.setFont(new Font("Monospace", Font.PLAIN, 20));
         setLayout(new BorderLayout());
         
         add(new JScrollPane(textArea), BorderLayout.CENTER);
