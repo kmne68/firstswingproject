@@ -29,6 +29,39 @@ public class PersonTableModel extends AbstractTableModel {
         return colNames[column]; //To change body of generated methods, choose Tools | Templates.
     }
     
+
+    @Override
+    public boolean isCellEditable(int row, int column) {
+        
+        switch(column) {
+            case 1:
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    
+    @Override
+    public void setValueAt(Object value, int row, int column) {
+               
+        if (db == null)
+            return;
+        
+        Person person = db.get(row);
+
+        switch(column) {
+            case 1:
+                person.setName((String) value);
+                break;
+            default:
+                return;
+        }
+    }
+    
+    
+    
+    
     
     
     public void setData(List<Person> db) {

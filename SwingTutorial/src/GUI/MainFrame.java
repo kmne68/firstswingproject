@@ -155,18 +155,12 @@ public class MainFrame extends JFrame {
 
             @Override
             public void refreshEventOccurred() {
-                
-                connect();
-                try {
-                    controller.load();
-                } catch (SQLException ex) {
-                    JOptionPane.showMessageDialog(MainFrame.this, "Cannot load from database", "Database read error.", JOptionPane.ERROR_MESSAGE);
-                }
-                
-                tablePanel.refresh();
+
+                refresh();
             }
             
         }); 
+        
         
         // listens for form clicks
         formPanel.setFormListener(new FormListener() {
@@ -211,6 +205,8 @@ public class MainFrame extends JFrame {
       //  add(textPanel, BorderLayout.CENTER);
      //   add(tablePanel, BorderLayout.CENTER);
         add(splitPane, BorderLayout.CENTER);
+        
+        refresh();
 
     }
     
@@ -348,6 +344,29 @@ public class MainFrame extends JFrame {
             
             
             return menuBar;
+        }
+        
+        
+        private void refresh() {
+            
+                   
+            try {
+                controller.connect();
+            }
+            catch (Exception ex) {
+                JOptionPane.showMessageDialog(MainFrame.this, "Cannot connect to database", "Database connection error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            try {
+                controller.load();
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(MainFrame.this, "Cannot load from database", "Database read error.", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+                
+            tablePanel.refresh();
+            
         }
     
 }
