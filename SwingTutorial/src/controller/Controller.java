@@ -94,13 +94,13 @@ public class Controller {
         
         EmploymentCategory employmentCategory;
         
-        if(employmentStatus.equals("employed")) {
+        if(employmentStatus.equals("Employed")) {
             employmentCategory = EmploymentCategory.employed;
         }
-        else if (employmentStatus.equals("self-employed")) {
+        else if (employmentStatus.equals("Self-employed")) {
             employmentCategory = EmploymentCategory.selfEmployed;
         }
-        else if (employmentStatus.equals("unemployed")) {
+        else if (employmentStatus.equals("Unemployed")) {
             employmentCategory = EmploymentCategory.unemployed;
         }
         else {
@@ -118,7 +118,8 @@ public class Controller {
         }
         
         Person person = new Person(name, occupation, ageCategory, employmentCategory, taxID, usCitizen, genderCategory);
-        
+        System.out.println("employmentCategory = " + employmentCategory);
+        System.out.println("employmentStatus = " + employmentStatus);       
         db.addPerson(person);
     }
     
