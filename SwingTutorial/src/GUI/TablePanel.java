@@ -5,6 +5,7 @@
  */
 package GUI;
 
+import Model.EmploymentCategory;
 import Model.Person;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -36,7 +37,8 @@ public class TablePanel extends JPanel {
         table = new JTable(tableModel);
         popup = new JPopupMenu();
         
-        table.setDefaultRenderer(EmploymentCategory.class, new EmploymentCategoryRenderer);
+        table.setDefaultRenderer(EmploymentCategory.class, new EmploymentCategoryRenderer());
+        table.setRowHeight(25);
         
         JMenuItem removeItem = new JMenuItem("Delete row");
         popup.add(removeItem);

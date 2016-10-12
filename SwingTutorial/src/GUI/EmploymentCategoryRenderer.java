@@ -4,20 +4,32 @@
  */
 package GUI;
 
+import Model.EmploymentCategory;
 import java.awt.Component;
+import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 
+    
 /**
  *
  * @author Keith
  */
 public class EmploymentCategoryRenderer implements TableCellRenderer {
 
-    @Override
-    public Component getTableCellRendererComponent(JTable jtable, Object o, boolean bln, boolean bln1, int i, int i1) {
+    private JComboBox combo;
+    
+    public EmploymentCategoryRenderer() {
+        
+        combo = new JComboBox(EmploymentCategory.values());
+        
+        }
 
-        return null;
+    @Override
+    public Component getTableCellRendererComponent(JTable jtable, Object value, boolean isSelected , boolean hasFocus, int row, int column) {
+       
+        combo.setSelectedItem(value);
+        return combo;
     }
     
 }

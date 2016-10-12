@@ -105,7 +105,7 @@ public class Controller {
         }
         else {
             employmentCategory = EmploymentCategory.other;
-        //    System.err.println(employmentStatus);
+            System.err.println(employmentStatus);
         }
         
         Gender genderCategory;
