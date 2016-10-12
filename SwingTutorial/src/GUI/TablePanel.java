@@ -36,6 +36,8 @@ public class TablePanel extends JPanel {
         table = new JTable(tableModel);
         popup = new JPopupMenu();
         
+        table.setDefaultRenderer(EmploymentCategory.class, new EmploymentCategoryRenderer);
+        
         JMenuItem removeItem = new JMenuItem("Delete row");
         popup.add(removeItem);
         
