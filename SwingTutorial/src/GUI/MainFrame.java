@@ -32,6 +32,8 @@ import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
+import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -56,6 +58,17 @@ public class MainFrame extends JFrame {
     // Constructor
     public MainFrame() {    
         super("Hello World");
+        
+        try {
+            for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    UIManager.setLookAndFeel(info.getClassName());
+                break;
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Cannot set look and feel.");
+        }
         
         setSize(600, 500);
         setMinimumSize(new Dimension(600, 500));
